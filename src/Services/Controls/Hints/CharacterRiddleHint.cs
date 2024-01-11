@@ -9,7 +9,7 @@ using Nekres.Loading_Screen_Hints.Services.Models;
 namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
     public class CharacterRiddleHint : BaseHint {
 
-        private CharacterRiddle characterRiddle;
+        private CharacterRiddle _characterRiddle;
 
         private BitmapFont            _font;
         private Effect                _silhouetteFX;
@@ -18,7 +18,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         private SpriteBatchParameters _effectParams;
 
         public CharacterRiddleHint(CharacterRiddle characterRiddle) {
-            this.characterRiddle = characterRiddle;
+            _characterRiddle = characterRiddle;
             _font                = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size24, ContentService.FontStyle.Regular);
             _silhouetteFX        = GameService.Content.ContentManager.Load<Effect>(@"effects\silhouette");
             _glowFx              = GameService.Content.ContentManager.Load<Effect>(@"effects\glow");
@@ -31,6 +31,8 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
                 Effect = _silhouetteFX,
                 BlendState = BlendState.NonPremultiplied
             };
+
+            FadeOutDuration = 3f;
         }
 
         protected override void DisposeControl() {
@@ -40,22 +42,23 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
-            if (characterRiddle.Texture is not {HasSwapped: true}) {
+            if (_characterRiddle.Texture is not {HasSwapped: true}) {
                 return;
             }
 
             base.Paint(spriteBatch, bounds); // Draw background
 
-            var texture = characterRiddle.Texture.Texture;
+            var texture = _characterRiddle.Texture.Texture;
 
             string title;
             if (GameService.GameIntegration.Gw2Instance.IsInGame) { // Show solution or not
                 _effectParams.Effect = _glowFx;
-                _glowFx.Parameters["Opacity"].SetValue(this.Parent?.Opacity ?? 0);
+                _glowFx.Parameters["Opacity"].SetValue(_opacity);
                 _glowFx.Parameters["TextureWidth"].SetValue((float)texture.Width);
-                title = string.Format(Resources.It_s__0__, characterRiddle.Name);
+                title = string.Format(Resources.It_s__0__, _characterRiddle.Name);
             } else {
                 _effectParams.Effect = _silhouetteFX;
+                _silhouetteFX.Parameters["Opacity"].SetValue(_opacity);
                 _silhouetteFX.Parameters["TextureWidth"].SetValue((float)texture.Width);
                 title = Resources.Who_s_that_Character_;
             }
