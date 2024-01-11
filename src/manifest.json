@@ -1,6 +1,6 @@
 {
   "name": "Loading Screen Hints",
-  "version": "1.1.2",
+  "version": "1.1.5",
   "namespace": "bh.general.loadingscreenhints",
   "package": "LoadingScreenHintsModule.dll",
   "manifest_version": 1,
