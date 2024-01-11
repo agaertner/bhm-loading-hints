@@ -1,9 +1,10 @@
-﻿using System;
-using Blish_HUD;
+﻿using Blish_HUD;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nekres.Loading_Screen_Hints.Properties;
+using System;
 
 namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
     public abstract class BaseHint : Control {
@@ -16,6 +17,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         protected float FadeOutDuration;
 
         protected BaseHint() {
+            BasicTooltipText = string.Format(Resources.Click_to__0_, Resources.Hide);
             Parent = GameService.Graphics.SpriteScreen;
             Size   = new Point(600, 200);
 
@@ -30,6 +32,8 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         private bool        _fadeDirection;
 
         public void FadeOut() {
+            this.BasicTooltipText = string.Empty;
+
             // Already invisible.
             if (_opacity <= 0) {
                 this.Dispose();
@@ -58,6 +62,8 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
             _toggleFade?.Cancel();
             _toggleFade    = GameService.Animation.Tweener.Tween(this, new { Opacity = (float)Convert.ToInt32(_fadeDirection) }, 0.2f);
             _fadeDirection = !_fadeDirection;
+
+            this.BasicTooltipText = string.Format(Resources.Click_to__0_, _fadeDirection ? Resources.Show : Resources.Hide);
         }
 
         protected override CaptureType CapturesInput() {

@@ -126,4 +126,13 @@
   <data name="Who&apos;s that Character?" xml:space="preserve">
     <value>Who&apos;s that Character?</value>
   </data>
+  <data name="Click to {0}" xml:space="preserve">
+    <value>Click to {0}</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
 </root>
