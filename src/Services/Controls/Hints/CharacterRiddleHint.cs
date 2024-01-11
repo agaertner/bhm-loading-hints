@@ -1,4 +1,5 @@
-﻿using Blish_HUD;
+﻿using System;
+using Blish_HUD;
 using Blish_HUD.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         private Effect                _glowFx;
         private SpriteBatchParameters _defaultParams;
         private SpriteBatchParameters _effectParams;
+        private bool                  _disposed;
 
         public CharacterRiddleHint(CharacterRiddle characterRiddle) {
             _characterRiddle = characterRiddle;
@@ -36,13 +38,14 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         }
 
         protected override void DisposeControl() {
+            _disposed = true;
             _glowFx?.Dispose();
             _silhouetteFX?.Dispose();
             base.DisposeControl();
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
-            if (_characterRiddle.Texture is not {HasSwapped: true}) {
+            if (_characterRiddle.Texture is not {HasSwapped: true} || _disposed) {
                 return;
             }
 
