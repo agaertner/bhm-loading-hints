@@ -1,11 +1,11 @@
-﻿using System;
-using Blish_HUD;
+﻿using Blish_HUD;
 using Blish_HUD.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
 using Nekres.Loading_Screen_Hints.Properties;
 using Nekres.Loading_Screen_Hints.Services.Models;
+using System;
 
 namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
     public class CharacterRiddleHint : BaseHint {
@@ -13,39 +13,28 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         private CharacterRiddle _characterRiddle;
 
         private BitmapFont            _font;
-        private Effect                _silhouetteFX;
+        private Effect                _silhouetteFx;
         private Effect                _glowFx;
         private SpriteBatchParameters _defaultParams;
         private SpriteBatchParameters _effectParams;
-        private bool                  _disposed;
 
-        public CharacterRiddleHint(CharacterRiddle characterRiddle) {
+        public CharacterRiddleHint(CharacterRiddle characterRiddle, Effect glowFx, Effect silhouetteFx) {
             _characterRiddle = characterRiddle;
             _font                = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size24, ContentService.FontStyle.Regular);
-            _silhouetteFX        = GameService.Content.ContentManager.Load<Effect>(@"effects\silhouette");
-            _glowFx              = GameService.Content.ContentManager.Load<Effect>(@"effects\glow");
 
-            _silhouetteFX.Parameters["GlowColor"].SetValue(Color.White.ToVector4());
-            _glowFx.Parameters["GlowColor"].SetValue(Color.White.ToVector4());
-            
             _defaultParams = new SpriteBatchParameters();
+            _glowFx        = glowFx;
+            _silhouetteFx  = silhouetteFx;
             _effectParams = new SpriteBatchParameters {
-                Effect = _silhouetteFX,
+                Effect     = _silhouetteFx,
                 BlendState = BlendState.NonPremultiplied
             };
 
-            FadeOutDuration = 3f;
-        }
-
-        protected override void DisposeControl() {
-            _disposed = true;
-            _glowFx?.Dispose();
-            _silhouetteFX?.Dispose();
-            base.DisposeControl();
+            FadeOutDuration = 2.5f;
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
-            if (_characterRiddle.Texture is not {HasSwapped: true} || _disposed) {
+            if (_characterRiddle.Texture is not {HasSwapped: true}) {
                 return;
             }
 
@@ -58,12 +47,12 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
                 _effectParams.Effect = _glowFx;
                 _glowFx.Parameters["Opacity"].SetValue(_opacity);
                 _glowFx.Parameters["TextureWidth"].SetValue((float)texture.Width);
-                title = string.Format(Resources.It_s__0__, _characterRiddle.Name ?? string.Empty);
+                title = string.Format(LoadingScreenHintsModule.Instance.Resources.GetString("It's {0}!"), _characterRiddle.Name ?? string.Empty);
             } else {
-                _effectParams.Effect = _silhouetteFX;
-                _silhouetteFX.Parameters["Opacity"].SetValue(_opacity);
-                _silhouetteFX.Parameters["TextureWidth"].SetValue((float)texture.Width);
-                title = Resources.Who_s_that_Character_;
+                _effectParams.Effect = _silhouetteFx;
+                _silhouetteFx.Parameters["Opacity"].SetValue(_opacity);
+                _silhouetteFx.Parameters["TextureWidth"].SetValue((float)texture.Width);
+                title = LoadingScreenHintsModule.Instance.Resources.GetString("Who's that Character?");
             }
 
             var center = new Point(bounds.Width / 2, bounds.Height / 2);
@@ -74,11 +63,16 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
 
             var imgCenter = new Point(centerLeft - imgSize.X / 2, center.Y - imgSize.Y / 2);
 
-            spriteBatch.End();
-            spriteBatch.Begin(_effectParams);
-            spriteBatch.DrawOnCtrl(this, texture, new Rectangle(imgCenter.X, imgCenter.Y, imgSize.X, imgSize.Y), Color.White);
-            spriteBatch.End();
-            spriteBatch.Begin(_defaultParams);
+            try {
+                spriteBatch.End();
+                spriteBatch.Begin(_effectParams);
+                spriteBatch.DrawOnCtrl(this, texture, new Rectangle(imgCenter.X, imgCenter.Y, imgSize.X, imgSize.Y), Color.White);
+                spriteBatch.End();
+                spriteBatch.Begin(_defaultParams);
+            } catch (ObjectDisposedException) {
+                // Module was unloaded and effects were disposed while we were drawing.
+                return;
+            }
 
             string wrappedTitle = DrawUtil.WrapText(_font, title, bounds.Width / 2 - BaseHint.RIGHT_PADDING);
             int    titleHeight  = (int)_font.MeasureString(wrappedTitle).Height;

@@ -135,4 +135,10 @@
   <data name="Show" xml:space="preserve">
     <value>Afficher</value>
   </data>
+  <data name="Language Override" xml:space="preserve">
+    <value>Remplacement de la langue</value>
+  </data>
+  <data name="Forces a different language for displaying hints." xml:space="preserve">
+    <value>Force l&apos;utilisation d&apos;une langue différente pour l&apos;affichage des indices.</value>
+  </data>
 </root>
