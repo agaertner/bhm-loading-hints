@@ -1,10 +1,12 @@
 ﻿using Blish_HUD;
 using Flurl.Http;
+using Microsoft.Xna.Framework.Graphics;
 using Nekres.Loading_Screen_Hints.Services.Controls.Hints;
 using Nekres.Loading_Screen_Hints.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,10 +29,10 @@ namespace Nekres.Loading_Screen_Hints.Services {
         }
 
         public async Task LoadAsync(CultureInfo locale) {
-            var knowledgeUrl       = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-knowledge";
-            var moduleKnowledgeUrl = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-modules";
-            var quotesUrl          = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-quotes";
-            var charactersUrl      = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-characters";
+            var knowledgeUrl       = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-knowledge.json";
+            var moduleKnowledgeUrl = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-modules.json";
+            var quotesUrl          = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-quotes.json";
+            var charactersUrl      = $"{_baseUrl}{locale.TwoLetterISOLanguageName}-characters.json";
 
             _knowledge       = await HttpUtil.RetryAsync(() => knowledgeUrl.GetJsonAsync<List<string>>())                                   ?? _knowledge;
             _quotes          = await HttpUtil.RetryAsync(() => quotesUrl.GetJsonAsync<List<Quote>>())                                       ?? _quotes;
@@ -38,31 +40,59 @@ namespace Nekres.Loading_Screen_Hints.Services {
             _moduleKnowledge = FilterModuleHints(await HttpUtil.RetryAsync(() => moduleKnowledgeUrl.GetJsonAsync<List<ModuleKnowledge>>())) ?? _moduleKnowledge;
         }
 
-        public BaseHint NextHint() {
-            var maxCount = Math.Max(Math.Max(_knowledge.Count, _moduleKnowledge.Count), Math.Max(_quotes.Count, _characters.Count));
+        public async Task<BaseHint> NextHint() {
+            var totalHints = _knowledge.Count + _moduleKnowledge.Count + _quotes.Count + _characters.Count;
 
-            int randomValue = RandomUtil.GetRandom(0, maxCount + 1);
+            if (totalHints <= 0) {
+                return null;
+            }
+
+            int randomValue = RandomUtil.GetRandom(1, totalHints);
 
             int currentCount = 0;
 
-            currentCount += _knowledge.Count;
-            if (randomValue <= currentCount) {
-                return new KnowledgeHint(_knowledge[randomValue]);
+            // Select hint type with chance based on amount of each type (like selecting from a single joined list).
+            if (_knowledge.Any()) {
+                currentCount += _knowledge.Count;
+                if (randomValue <= currentCount) {
+                    return new KnowledgeHint(_knowledge[RandomUtil.GetRandom(0, _knowledge.Count - 1)]);
+                }
             }
 
-            currentCount += _moduleKnowledge.Count;
-            if (randomValue <= currentCount) {
-                return new ModuleKnowledgeHint(_moduleKnowledge[randomValue]);
+            if (_moduleKnowledge.Any()) {
+                currentCount += _moduleKnowledge.Count;
+                if (randomValue <= currentCount) {
+                    return new ModuleKnowledgeHint(_moduleKnowledge[RandomUtil.GetRandom(0, _moduleKnowledge.Count - 1)]);
+                }
             }
 
-            currentCount += _quotes.Count;
-            if (randomValue <= currentCount) {
-                return new QuoteHint(_quotes[randomValue]);
+            if (_quotes.Any()) {
+                currentCount += _quotes.Count;
+                if (randomValue <= currentCount) {
+                    return new QuoteHint(_quotes[RandomUtil.GetRandom(0, _quotes.Count - 1)]);
+                }
             }
 
-            currentCount += _characters.Count;
-            if (randomValue <= currentCount) {
-                return new CharacterRiddleHint(_characters[randomValue]);
+            if (_characters.Any()) {
+                currentCount += _characters.Count;
+                if (randomValue <= currentCount) {
+                    var characterHint = _characters[RandomUtil.GetRandom(0, _characters.Count - 1)];
+                    var imageBytes    = await HttpUtil.TryAsync(() => $"{_baseUrl}characters/{characterHint.Image}".GetBytesAsync());
+
+                    if (imageBytes == null) {
+                        return null;
+                    }
+
+                    try {
+                        using var textureStream = new MemoryStream(imageBytes);
+                        var       loadedTexture = Texture2D.FromStream(GameService.Graphics.GraphicsDeviceManager.GraphicsDevice, textureStream);
+                        characterHint.Texture.SwapTexture(loadedTexture);
+                    } catch (Exception ex) {
+                        LoadingScreenHintsModule.Logger.Debug(ex, ex.Message);
+                    }
+
+                    return new CharacterRiddleHint(characterHint);
+                }
             }
 
             return null;
@@ -74,7 +104,8 @@ namespace Nekres.Loading_Screen_Hints.Services {
             }
             var result = new List<ModuleKnowledge>();
             foreach (var moduleKnowledge in moduleHints) {
-                var module = GameService.Module.Modules.FirstOrDefault(mm => mm.Manifest.Namespace.StartsWith(moduleKnowledge.ManifestNamespace));
+                var l      = GameService.Module.Modules;
+                var module = GameService.Module.Modules.FirstOrDefault(mm => mm.Manifest.Namespace.StartsWith(moduleKnowledge.ManifestNamespace, StringComparison.InvariantCultureIgnoreCase));
                 if (module is {Enabled: true}) { // Filter hints for enabled modules.
                     result.Add(moduleKnowledge);
                 }

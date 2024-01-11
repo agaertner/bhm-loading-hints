@@ -2,7 +2,7 @@
 
 namespace Nekres.Loading_Screen_Hints.Services.Models {
     public class Quote {
-        [JsonProperty("text")]
+        [JsonProperty("quote")]
         public string Text { get; set; }
         [JsonProperty("source")]
         public string Source { get; set; }

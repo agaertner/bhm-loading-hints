@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 namespace Nekres.Loading_Screen_Hints.Services.Models {
     public class CharacterRiddle {
         [JsonProperty("image")]
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonIgnore]
-        public AsyncTexture2D Image { get; set; }
+        public AsyncTexture2D Texture { get; set; }
     }
 }
