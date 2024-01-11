@@ -1,6 +1,118 @@
 [
     {
-        "image": "",
-        "name": ""
+        "image": "blish.png",
+        "name": "Blish"
+    },
+    {
+        "image": "taimi.png",
+        "name": "Taimi"
+    },
+    {
+        "image": "braham_eirsson.png",
+        "name": "Braham Eirsson"
+    },
+    {
+        "image": "rox_whetstone.png",
+        "name": "Rox Whetstone"
+    },
+    {
+        "image": "kasmeer_meade.png",
+        "name": "Kasmeer Meade"
+    },
+    {
+        "image": "marjory_delaqua.png",
+        "name": "Marjory Delaqua"
+    },
+    {
+        "image": "gorrik.png",
+        "name": "Gorrik"
+    },
+    {
+        "image": "logan_thackeray.png",
+        "name": "Logan Thackeray"
+    },
+    {
+        "image": "zojja.png",
+        "name": "Zojja"
+    },
+    {
+        "image": "rytlock_brimstone.png",
+        "name": "Rytlock Brimstone"
+    },
+    {
+        "image": "snaff.png",
+        "name": "Snaff"
+    },
+    {
+        "image": "eir_stegalkin.png",
+        "name": "Eir Stegalkin"
+    },
+    {
+        "image": "caithe.png",
+        "name": "Caithe"
+    },
+    {
+        "image": "the_avatar_of_the_pale_tree.png",
+        "name": "the Avatar of The Pale Tree"
+    },
+    {
+        "image": "trahearne.png",
+        "name": "Trahearne"
+    },
+    {
+        "image": "canach.png",
+        "name": "Canach"
+    },
+    {
+        "image": "koss.png",
+        "name": "Koss"
+    },
+    {
+        "image": "palawa_ignacious_joko.png",
+        "name": "Palawa Ignacious Joko"
+    },
+    {
+        "image": "scruffy.png",
+        "name": "Scruffy"
+    },
+    {
+        "image": "countess_anise.png",
+        "name": "Countess Anise"
+    },
+    {
+        "image": "queen_jennah.png",
+        "name": "Queen Jennah"
+    },
+    {
+        "image": "almorra_soulkeeper.png",
+        "name": "Almorra Soulkeeper"
+    },
+    {
+        "image": "scarlet_briar.png",
+        "name": "Scarlet Briar"
+    },
+    {
+        "image": "riel_darkwater.png",
+        "name": "Riel Darkwater"
+    },
+    {
+        "image": "turai_ossa.png",
+        "name": "Turai Ossa"
+    },
+    {
+        "image": "forgal_kernsson.png",
+        "name": "Forgal Kernsson"
+    },
+    {
+        "image": "steward_gixx.png",
+        "name": "Steward Gixx"
+    },
+    {
+        "image": "faolain.png",
+        "name": "Faolain"
+    },
+    {
+        "image": "lord_faren.png",
+        "name": "Lord Faren"
     }
 ]
