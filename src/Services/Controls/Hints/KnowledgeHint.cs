@@ -18,7 +18,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
             _bigFont    = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size24, ContentService.FontStyle.Regular);
             _knowledge  = knowledge;
 
-            FadeOutDuration = _knowledge.Length / 40f;
+            FadeOutDuration = _knowledge.Length / 50f;
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {

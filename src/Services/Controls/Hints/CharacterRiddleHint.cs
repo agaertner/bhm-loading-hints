@@ -30,7 +30,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
                 BlendState = BlendState.NonPremultiplied
             };
 
-            FadeOutDuration = 3f;
+            FadeOutDuration = 2.5f;
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
