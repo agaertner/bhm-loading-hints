@@ -59,5 +59,32 @@ namespace Nekres.Loading_Screen_Hints.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Did You Know:.
+        /// </summary>
+        internal static string Did_You_Know_ {
+            get {
+                return ResourceManager.GetString("Did You Know:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s {0}!.
+        /// </summary>
+        internal static string It_s__0__ {
+            get {
+                return ResourceManager.GetString("It\'s {0}!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Who&apos;s that Character?.
+        /// </summary>
+        internal static string Who_s_that_Character_ {
+            get {
+                return ResourceManager.GetString("Who\'s that Character?", resourceCulture);
+            }
+        }
     }
 }
