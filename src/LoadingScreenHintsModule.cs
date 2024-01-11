@@ -6,8 +6,8 @@ using Nekres.Loading_Screen_Hints.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Globalization;
 using System.Threading.Tasks;
+using static Nekres.Loading_Screen_Hints.Services.ResourceService;
 
 namespace Nekres.Loading_Screen_Hints {
 
@@ -26,7 +26,8 @@ namespace Nekres.Loading_Screen_Hints {
         #endregion
 
         // Settings
-        internal SettingEntry<List<int>> SeenHints;
+        internal SettingEntry<List<int>>        SeenHints;
+        internal SettingEntry<SupportedLocales> LanguageOverride;
 
         internal ResourceService Resources;
         internal LoadingService  Loading;
@@ -37,6 +38,10 @@ namespace Nekres.Loading_Screen_Hints {
         }
 
         protected override void DefineSettings(SettingCollection settings) {
+            LanguageOverride = settings.DefineSetting("languageOverride", SupportedLocales.None, 
+                                                      () => Properties.Resources.Language_Override, 
+                                                      () => Properties.Resources.Forces_a_different_language_for_displaying_hints_);
+
             var selfManagedSettings = settings.AddSubCollection("selfManaged", false, false);
             SeenHints = selfManagedSettings.DefineSetting("seen", new List<int>());
         }
@@ -47,7 +52,7 @@ namespace Nekres.Loading_Screen_Hints {
         }
 
         protected override async Task LoadAsync() {
-            await Resources.LoadAsync(CultureInfo.CurrentUICulture);
+            await Resources.LoadAsync();
         }
 
         protected override void OnModuleLoaded(EventArgs e) {

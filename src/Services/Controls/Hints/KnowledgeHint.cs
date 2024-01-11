@@ -25,7 +25,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
             base.Paint(spriteBatch, bounds); // Draw background
 
             var    center      = new Point(bounds.Width / 2, bounds.Height / 2);
-            string title       = Resources.Did_You_Know_;
+            string title       = LoadingScreenHintsModule.Instance.Resources.GetString("Did You Know:");
             int    titleHeight = (int)_bigFont.MeasureString(title).Height;
             int    titleWidth  = (int)_bigFont.MeasureString(title).Width;
             var    titleCenter = new Point(center.X - titleWidth / 2, center.Y - titleHeight / 2);

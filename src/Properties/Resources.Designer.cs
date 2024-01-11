@@ -79,6 +79,15 @@ namespace Nekres.Loading_Screen_Hints.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forces a different language for displaying hints..
+        /// </summary>
+        internal static string Forces_a_different_language_for_displaying_hints_ {
+            get {
+                return ResourceManager.GetString("Forces a different language for displaying hints.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
         internal static string Hide {
@@ -93,6 +102,15 @@ namespace Nekres.Loading_Screen_Hints.Properties {
         internal static string It_s__0__ {
             get {
                 return ResourceManager.GetString("It\'s {0}!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language Override.
+        /// </summary>
+        internal static string Language_Override {
+            get {
+                return ResourceManager.GetString("Language Override", resourceCulture);
             }
         }
         

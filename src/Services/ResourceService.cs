@@ -1,7 +1,9 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Flurl.Http;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nekres.Loading_Screen_Hints.Properties;
 using Nekres.Loading_Screen_Hints.Services.Controls.Hints;
 using Nekres.Loading_Screen_Hints.Services.Models;
 using System;
@@ -20,29 +22,43 @@ namespace Nekres.Loading_Screen_Hints.Services {
         private List<Quote>           _quotes;
         private List<CharacterRiddle> _characters;
 
-        private List<string> _supportedLocales = new() {
-            "en",
-            "de",
-            "es",
-            "fr"
-        };
+        internal enum SupportedLocales {
+            None,
+            English,
+            German,
+            Spanish,
+            French
+        }
+
+        private Effect _silhouetteFX;
+        private Effect _glowFx;
+
+        private CultureInfo _locale;
 
         public ResourceService() {
-            GameService.Overlay.UserLocaleChanged += OnUserLocaleChanged;
+            GameService.Overlay.UserLocaleChanged                             += OnUserLocaleChanged;
+            LoadingScreenHintsModule.Instance.LanguageOverride.SettingChanged += OnUserLocaleChanged;
 
             _knowledge       = new List<string>();
             _moduleKnowledge = new List<ModuleKnowledge>();
             _quotes          = new List<Quote>();
             _characters      = new List<CharacterRiddle>();
+
+            _silhouetteFX = GameService.Content.ContentManager.Load<Effect>(@"effects\silhouette");
+            _glowFx       = GameService.Content.ContentManager.Load<Effect>(@"effects\glow");
+            _silhouetteFX.Parameters["GlowColor"].SetValue(Color.White.ToVector4());
+            _glowFx.Parameters["GlowColor"].SetValue(Color.White.ToVector4());
         }
 
-        public async Task LoadAsync(CultureInfo locale) {
+        public async Task LoadAsync() {
             DisposeTextures();
 
-            var langCode = _supportedLocales.Any(lang => lang.Equals(locale.TwoLetterISOLanguageName, StringComparison.InvariantCultureIgnoreCase)) 
-                               ? locale.TwoLetterISOLanguageName.ToLowerInvariant()
-                               : "en"; // Fallback to english.
+            _locale = GetCultureInfo(LoadingScreenHintsModule.Instance.LanguageOverride.Value);
             
+            var langCode = Enum.GetNames(typeof(SupportedLocales)).Skip(1).Any(lang => lang.Equals(_locale.EnglishName, StringComparison.InvariantCultureIgnoreCase))
+                                          ? _locale.TwoLetterISOLanguageName.ToLowerInvariant()
+                                          : "en"; // Fallback to english.
+
             var knowledgeUrl       = $"{_baseUrl}{langCode}-knowledge.json";
             var moduleKnowledgeUrl = $"{_baseUrl}{langCode}-modules.json";
             var quotesUrl          = $"{_baseUrl}{langCode}-quotes.json";
@@ -66,7 +82,7 @@ namespace Nekres.Loading_Screen_Hints.Services {
             // Every hint seen, reset.
             if (LoadingScreenHintsModule.Instance.SeenHints.Value.Count >= totalHints) {
                 LoadingScreenHintsModule.Instance.SeenHints.Value = new List<int>();
-                await LoadAsync(CultureInfo.CurrentUICulture);
+                await LoadAsync();
                 return await NextHint();
             }
 
@@ -121,7 +137,7 @@ namespace Nekres.Loading_Screen_Hints.Services {
                     }
 
                     LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
-                    return new CharacterRiddleHint(characterHint);
+                    return new CharacterRiddleHint(characterHint, _glowFx, _silhouetteFX);
                 }
             }
 
@@ -146,8 +162,22 @@ namespace Nekres.Loading_Screen_Hints.Services {
             return result;
         }
 
-        private async void OnUserLocaleChanged(object sender, ValueEventArgs<CultureInfo> e) {
-            await LoadAsync(e.Value);
+        private CultureInfo GetCultureInfo(SupportedLocales locale) {
+            return locale switch {
+                SupportedLocales.English => CultureInfo.GetCultureInfo(9),
+                SupportedLocales.Spanish => CultureInfo.GetCultureInfo(10),
+                SupportedLocales.German  => CultureInfo.GetCultureInfo(7),
+                SupportedLocales.French  => CultureInfo.GetCultureInfo(12),
+                _                        => CultureInfo.CurrentUICulture
+            };
+        }
+
+        public string GetString(string name) {
+            return Resources.ResourceManager.GetString(name, _locale);
+        }
+
+        private async void OnUserLocaleChanged(object sender, EventArgs e) {
+            await LoadAsync();
         }
 
         private void DisposeTextures() {
@@ -159,7 +189,12 @@ namespace Nekres.Loading_Screen_Hints.Services {
         }
 
         public void Dispose() {
-            GameService.Overlay.UserLocaleChanged -= OnUserLocaleChanged;
+            GameService.Overlay.UserLocaleChanged                             -= OnUserLocaleChanged;
+            LoadingScreenHintsModule.Instance.LanguageOverride.SettingChanged -= OnUserLocaleChanged;
+
+            _glowFx?.Dispose();
+            _silhouetteFX?.Dispose();
+
             DisposeTextures();
         }
     }
