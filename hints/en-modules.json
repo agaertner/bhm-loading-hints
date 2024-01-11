@@ -5,6 +5,6 @@
     },
     {
       "namespace": "bh.community.pathing",
-      "text": "You can use Ctrl+Click on a category box to turn OFF all other categories at that level."
+      "text": "You can use Ctrl+Click on a marker category box to turn OFF all other categories at that level."
     }
 ]
