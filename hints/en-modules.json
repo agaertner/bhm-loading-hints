@@ -2,5 +2,9 @@
     {
         "namespace": "Nekres.",
         "text": "Thank you for using my modules."
+    },
+    {
+      "namespace": "bh.community.pathing",
+      "text": "You can use Ctrl+Click on a category box to turn OFF all other categories at that level."
     }
 ]
