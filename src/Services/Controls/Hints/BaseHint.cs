@@ -1,4 +1,5 @@
-﻿using Blish_HUD;
+﻿using System;
+using Blish_HUD;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Microsoft.Xna.Framework;
@@ -24,32 +25,39 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
             Graphics.SpriteScreen.ContentResized += UpdateLocation;
         }
 
-        public Glide.Tween Fade { get; private set; }
+        private Glide.Tween _fadeOut;
+        private Glide.Tween _toggleFade;
+        private bool        _fadeDirection;
 
         public void FadeOut() {
-            if (_opacity != 1.0f) {
+            // Already invisible.
+            if (_opacity <= 0) {
+                this.Dispose();
                 return;
             }
 
-            Fade = Animation.Tweener.Tween(this, new { Opacity = 0.0f }, 2f + ReadingTime);
-            Fade.OnComplete(Dispose);
+            _toggleFade?.Cancel();
+            _fadeOut = GameService.Animation.Tweener
+                                  .Tween(this, new { Opacity = 0.0f }, 2f + ReadingTime)
+                                  .OnComplete(Dispose);
         }
 
         protected override void OnLeftMouseButtonReleased(MouseEventArgs e) {
-            if (_opacity != 1.0) {
-                return;
-            }
-
-            GameService.Animation.Tweener.Tween(this, new { Opacity = 0.0f }, 0.2f);
+            Toggle();
         }
 
         protected override void OnRightMouseButtonReleased(MouseEventArgs e) {
-            if (_opacity != 0.0f) {
+            Toggle();
+        }
+
+        private void Toggle() {
+            if (_fadeOut is { Completion: > 0 }) {
                 return;
             }
 
-            GameService.Animation.Tweener.Tween(this, new { Opacity = 1.0f }, 0.2f);
-            base.OnRightMouseButtonReleased(e);
+            _toggleFade?.Cancel();
+            _toggleFade    = GameService.Animation.Tweener.Tween(this, new { Opacity = (float)Convert.ToInt32(_fadeDirection) }, 0.2f);
+            _fadeDirection = !_fadeDirection;
         }
 
         protected override CaptureType CapturesInput() {
@@ -70,7 +78,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         }
 
         private void Center(Rectangle bounds) {
-            this.Location = new Point((bounds.Width - this.Width) / 2, bounds.Height - this.Height);
+            this.Location = new Point((bounds.Width - this.Width) / 2,  bounds.Height - this.Height * 2);
         }
     }
 

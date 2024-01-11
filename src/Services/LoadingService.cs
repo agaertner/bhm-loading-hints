@@ -11,26 +11,15 @@ namespace Nekres.Loading_Screen_Hints.Services {
             GameService.GameIntegration.Gw2Instance.IsInGameChanged += OnGw2IsInGameChanged;
         }
 
-        private void OnGw2IsInGameChanged(object sender, ValueEventArgs<bool> e) {
+        private async void OnGw2IsInGameChanged(object sender, ValueEventArgs<bool> e) {
             if (e.Value) {
 
-                // A hint is currently showing
-                if (_currentHint is not {Fade: null}) {
-                    return;
-                }
-
-                if (_currentHint.Opacity == 0.0f) {
-                    _currentHint.Dispose();
-                    _currentHint = null;
-                } else {
-                    _currentHint.FadeOut();
-                }
+                _currentHint?.FadeOut();
 
             } else {
 
-                if (_currentHint == null) {
-                    _currentHint = LoadingScreenHintsModule.Instance.Resources.NextHint();
-                }
+                _currentHint?.Dispose();
+                _currentHint = await LoadingScreenHintsModule.Instance.Resources.NextHint();
 
             }
         }

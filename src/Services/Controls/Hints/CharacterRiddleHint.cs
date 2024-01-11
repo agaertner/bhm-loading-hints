@@ -40,13 +40,13 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
-            if (characterRiddle.Image is not {HasSwapped: true}) {
+            if (characterRiddle.Texture is not {HasSwapped: true}) {
                 return;
             }
 
             base.Paint(spriteBatch, bounds); // Draw background
 
-            var texture = characterRiddle.Image.Texture;
+            var texture = characterRiddle.Texture.Texture;
 
             string title;
             if (GameService.GameIntegration.Gw2Instance.IsInGame) { // Show solution or not
