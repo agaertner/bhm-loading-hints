@@ -48,14 +48,14 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
 
             base.Paint(spriteBatch, bounds); // Draw background
 
-            var texture = _characterRiddle.Texture.Texture;
+            var texture = _characterRiddle.Texture;
 
             string title;
             if (GameService.GameIntegration.Gw2Instance.IsInGame) { // Show solution or not
                 _effectParams.Effect = _glowFx;
                 _glowFx.Parameters["Opacity"].SetValue(_opacity);
                 _glowFx.Parameters["TextureWidth"].SetValue((float)texture.Width);
-                title = string.Format(Resources.It_s__0__, _characterRiddle.Name);
+                title = string.Format(Resources.It_s__0__, _characterRiddle.Name ?? string.Empty);
             } else {
                 _effectParams.Effect = _silhouetteFX;
                 _silhouetteFX.Parameters["Opacity"].SetValue(_opacity);

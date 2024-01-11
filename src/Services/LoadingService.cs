@@ -18,6 +18,10 @@ namespace Nekres.Loading_Screen_Hints.Services {
 
             } else {
 
+                if (string.IsNullOrWhiteSpace(GameService.Gw2Mumble.PlayerCharacter.Name)) {
+                    return; // Never went past character selection.
+                }
+
                 _currentHint?.Dispose();
                 _currentHint = await LoadingScreenHintsModule.Instance.Resources.NextHint();
 

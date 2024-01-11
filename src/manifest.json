@@ -1,12 +1,12 @@
 {
   "name": "Loading Screen Hints",
-  "version": "1.1.2",
+  "version": "1.1.5",
   "namespace": "bh.general.loadingscreenhints",
   "package": "LoadingScreenHintsModule.dll",
   "manifest_version": 1,
-  "description": "Shows tips, Tyrian knowledge, narrations, and character quizzes during the loading screen.",
+  "description": "Shows tips, facts, quotations and riddles during the loading screen.",
   "dependencies": {
-    "bh.blishhud": ">=0.11.6"
+    "bh.blishhud": ">=1.0.0"
   },
   "url": "https://github.com/agaertner/bhm-loading-hints",
   "contributors": [

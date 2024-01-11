@@ -118,12 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Did You Know:" xml:space="preserve">
-    <value>Did You Know:</value>
+    <value>Sabías que:</value>
   </data>
   <data name="It&apos;s {0}!" xml:space="preserve">
-    <value>It&apos;s {0}!</value>
+    <value>¡Es {0}!</value>
   </data>
   <data name="Who&apos;s that Character?" xml:space="preserve">
-    <value>Who&apos;s that Character?</value>
+    <value>¿Quién es ese Personaje?</value>
+  </data>
+  <data name="Click to {0}" xml:space="preserve">
+    <value>Haga clic para {0}</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Ocultar</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Mostrar</value>
   </data>
 </root>

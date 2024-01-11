@@ -30,7 +30,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
             int    titleWidth  = (int)_bigFont.MeasureString(title).Width;
             var    titleCenter = new Point(center.X - titleWidth / 2, center.Y - titleHeight / 2);
             spriteBatch.DrawStringOnCtrl(this, title, _bigFont, new Rectangle(titleCenter.X, BaseHint.TOP_PADDING, titleWidth, titleHeight), Color.White, false, true, 2, HorizontalAlignment.Center, VerticalAlignment.Top);
-            string wrappedTip = DrawUtil.WrapText(_font, _knowledge, bounds.Width - BaseHint.RIGHT_PADDING);
+            string wrappedTip = DrawUtil.WrapText(_font, _knowledge ?? string.Empty, bounds.Width - BaseHint.RIGHT_PADDING);
             int    tipHeight  = (int)_font.MeasureString(wrappedTip).Height;
             int    tipWidth   = (int)_font.MeasureString(wrappedTip).Width;
             var    tipCenter  = new Point(center.X - tipWidth / 2, center.Y - tipHeight / 2);

@@ -26,7 +26,7 @@ namespace Nekres.Loading_Screen_Hints {
         #endregion
 
         // Settings
-        private SettingEntry<HashSet<int>[]> SeenHints;
+        internal SettingEntry<List<int>> SeenHints;
 
         internal ResourceService Resources;
         internal LoadingService  Loading;
@@ -38,12 +38,12 @@ namespace Nekres.Loading_Screen_Hints {
 
         protected override void DefineSettings(SettingCollection settings) {
             var selfManagedSettings = settings.AddSubCollection("selfManaged", false, false);
-            SeenHints = selfManagedSettings.DefineSetting("seenHints", new HashSet<int>[3]);
+            SeenHints = selfManagedSettings.DefineSetting("seen", new List<int>());
         }
 
         protected override void Initialize() {
             Resources = new ResourceService();
-            Loading = new LoadingService();
+            Loading   = new LoadingService();
         }
 
         protected override async Task LoadAsync() {
