@@ -13,7 +13,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
 
         private Texture2D _bgTex;
 
-        protected float ReadingTime;
+        protected float FadeOutDuration;
 
         protected BaseHint() {
             Parent = GameService.Graphics.SpriteScreen;
@@ -38,7 +38,7 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
 
             _toggleFade?.Cancel();
             _fadeOut = GameService.Animation.Tweener
-                                  .Tween(this, new { Opacity = 0.0f }, 2f + ReadingTime)
+                                  .Tween(this, new { Opacity = 0.0f }, 2f + FadeOutDuration)
                                   .OnComplete(Dispose);
         }
 
@@ -65,6 +65,8 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         }
 
         protected override void DisposeControl() {
+            _toggleFade?.Cancel();
+            _fadeOut?.Cancel();
             _bgTex?.Dispose();
             base.DisposeControl();
         }
