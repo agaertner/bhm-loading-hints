@@ -53,7 +53,7 @@
     },
     {
         "image": "the_avatar_of_the_pale_tree.png",
-        "name": "Avatar de l'Arbre Clair"
+        "name": "l'Avatar de l'Arbre Clair"
     },
     {
         "image": "trahearne.png",
@@ -73,15 +73,15 @@
     },
     {
         "image": "scruffy.png",
-        "name": "Scruffy"
+        "name": "Piteux"
     },
     {
         "image": "countess_anise.png",
-        "name": "Comtesse Anise"
+        "name": "la Comtesse Anise"
     },
     {
         "image": "queen_jennah.png",
-        "name": "Reine Jennah"
+        "name": "la Reine Jennah"
     },
     {
         "image": "almorra_soulkeeper.png",
@@ -105,7 +105,7 @@
     },
     {
         "image": "steward_gixx.png",
-        "name": "Intendant Gixx"
+        "name": "l'Intendant Gixx"
     },
     {
         "image": "faolain.png",
@@ -113,6 +113,6 @@
     },
     {
         "image": "lord_faren.png",
-        "name": "Seigneur Faren"
+        "name": "le Seigneur Faren"
     }
 ]
