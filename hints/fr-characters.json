@@ -13,7 +13,7 @@
     },
     {
         "image": "rox_whetstone.png",
-        "name": "Rox Whetstone"
+        "name": "Rox Piochecoeur"
     },
     {
         "image": "kasmeer_meade.png",
@@ -53,7 +53,7 @@
     },
     {
         "image": "the_avatar_of_the_pale_tree.png",
-        "name": "the Avatar of The Pale Tree"
+        "name": "Avatar de l'Arbre Clair"
     },
     {
         "image": "trahearne.png",
@@ -77,23 +77,23 @@
     },
     {
         "image": "countess_anise.png",
-        "name": "Countess Anise"
+        "name": "Comtesse Anise"
     },
     {
         "image": "queen_jennah.png",
-        "name": "Queen Jennah"
+        "name": "Reine Jennah"
     },
     {
         "image": "almorra_soulkeeper.png",
-        "name": "Almorra Soulkeeper"
+        "name": "Almorra Garde-âme"
     },
     {
         "image": "scarlet_briar.png",
-        "name": "Scarlet Briar"
+        "name": "Scarlet Bruyère"
     },
     {
         "image": "riel_darkwater.png",
-        "name": "Riel Darkwater"
+        "name": "Riel Ondenoire"
     },
     {
         "image": "turai_ossa.png",
@@ -105,7 +105,7 @@
     },
     {
         "image": "steward_gixx.png",
-        "name": "Steward Gixx"
+        "name": "Intendant Gixx"
     },
     {
         "image": "faolain.png",
@@ -113,6 +113,6 @@
     },
     {
         "image": "lord_faren.png",
-        "name": "Lord Faren"
+        "name": "Seigneur Faren"
     }
 ]
