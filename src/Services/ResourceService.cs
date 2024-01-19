@@ -19,7 +19,7 @@ namespace Nekres.Loading_Screen_Hints.Services {
 
         private List<string>          _knowledge;
         private List<ModuleKnowledge> _moduleKnowledge;
-        private List<Quote>           _quotes;
+        private List<Quotation>       _quotes;
         private List<CharacterRiddle> _characters;
 
         internal enum SupportedLocales {
@@ -41,7 +41,7 @@ namespace Nekres.Loading_Screen_Hints.Services {
 
             _knowledge       = new List<string>();
             _moduleKnowledge = new List<ModuleKnowledge>();
-            _quotes          = new List<Quote>();
+            _quotes          = new List<Quotation>();
             _characters      = new List<CharacterRiddle>();
 
             _silhouetteFX = GameService.Content.ContentManager.Load<Effect>(@"effects\silhouette");
@@ -65,19 +65,29 @@ namespace Nekres.Loading_Screen_Hints.Services {
             var charactersUrl      = $"{_baseUrl}{langCode}-characters.json";
 
             _knowledge       = await HttpUtil.RetryAsync(() => knowledgeUrl.GetJsonAsync<List<string>>())                                   ?? _knowledge;
-            _quotes          = await HttpUtil.RetryAsync(() => quotesUrl.GetJsonAsync<List<Quote>>())                                       ?? _quotes;
+            _quotes          = await HttpUtil.RetryAsync(() => quotesUrl.GetJsonAsync<List<Quotation>>())                                   ?? _quotes;
             _characters      = await HttpUtil.RetryAsync(() => charactersUrl.GetJsonAsync<List<CharacterRiddle>>())                         ?? _characters;
             _moduleKnowledge = FilterModuleHints(await HttpUtil.RetryAsync(() => moduleKnowledgeUrl.GetJsonAsync<List<ModuleKnowledge>>())) ?? _moduleKnowledge;
         }
 
         public async Task<BaseHint> NextHint() {
-            var totalHints = _knowledge.Count + _moduleKnowledge.Count + _quotes.Count + _characters.Count;
+            var totalHints = 0;
+
+            if (LoadingScreenHintsModule.Instance.EnableHints.Value) {
+                totalHints += _knowledge.Count + _moduleKnowledge.Count;
+            }
+
+            if (LoadingScreenHintsModule.Instance.EnableQuotations.Value) {
+                totalHints += _quotes.Count;
+            }
+
+            if (LoadingScreenHintsModule.Instance.EnableCharacterRiddles.Value) {
+                totalHints += _characters.Count;
+            }
 
             if (totalHints <= 0) {
                 return null;
             }
-
-            int randomValue = RandomUtil.GetRandom(1, totalHints);
 
             // Every hint seen, reset.
             if (LoadingScreenHintsModule.Instance.SeenHints.Value.Count >= totalHints) {
@@ -86,58 +96,65 @@ namespace Nekres.Loading_Screen_Hints.Services {
                 return await NextHint();
             }
 
-            if (LoadingScreenHintsModule.Instance.SeenHints.Value.Contains(randomValue)) {
-                return await NextHint();
-            }
+            int randomValue;
+            do {
+                randomValue = RandomUtil.GetRandom(1, totalHints);
+            } while (LoadingScreenHintsModule.Instance.SeenHints.Value.Contains(randomValue));
 
             int currentCount = 0;
 
-            // Select hint type with chance based on amount of each type (like selecting from a single joined list).
-            if (_knowledge.Any()) {
-                currentCount += _knowledge.Count;
-                if (randomValue <= currentCount) {
-                    LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
-                    return new KnowledgeHint(_knowledge[randomValue - (currentCount - _knowledge.Count) - 1]);
-                }
-            }
-
-            if (_moduleKnowledge.Any()) {
-                currentCount += _moduleKnowledge.Count;
-                if (randomValue <= currentCount) {
-                    LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
-                    return new ModuleKnowledgeHint(_moduleKnowledge[randomValue - (currentCount - _moduleKnowledge.Count) - 1]);
-                }
-            }
-
-            if (_quotes.Any()) {
-                currentCount += _quotes.Count;
-                if (randomValue <= currentCount) {
-                    LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
-                    return new QuoteHint(_quotes[randomValue - (currentCount - _quotes.Count) - 1]);
-                }
-            }
-
-            if (_characters.Any()) {
-                currentCount += _characters.Count;
-                if (randomValue <= currentCount) {
-                    var characterHint = _characters[randomValue - (currentCount - _characters.Count) - 1];
-                    characterHint.Texture?.Dispose();
-                    characterHint.Texture = new AsyncTexture2D();
-                    var imageBytes = await HttpUtil.TryAsync(() => $"{_baseUrl}characters/{characterHint.Image}".GetBytesAsync());
-                    if (imageBytes == null) {
-                        return null;
+            if (LoadingScreenHintsModule.Instance.EnableHints.Value) {
+                // Select hint type with chance based on amount of each type (like selecting from a single joined list).
+                if (_knowledge.Any()) {
+                    currentCount += _knowledge.Count;
+                    if (randomValue <= currentCount) {
+                        LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
+                        return new KnowledgeHint(_knowledge[randomValue - (currentCount - _knowledge.Count) - 1]);
                     }
+                }
 
-                    try {
-                        using var textureStream = new MemoryStream(imageBytes);
-                        var       loadedTexture = Texture2D.FromStream(GameService.Graphics.GraphicsDeviceManager.GraphicsDevice, textureStream);
-                        characterHint.Texture.SwapTexture(loadedTexture);
-                    } catch (Exception ex) {
-                        LoadingScreenHintsModule.Logger.Debug(ex, ex.Message);
+                if (_moduleKnowledge.Any()) {
+                    currentCount += _moduleKnowledge.Count;
+                    if (randomValue <= currentCount) {
+                        LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
+                        return new ModuleKnowledgeHint(_moduleKnowledge[randomValue - (currentCount - _moduleKnowledge.Count) - 1]);
                     }
+                }
+            }
 
-                    LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
-                    return new CharacterRiddleHint(characterHint, _glowFx, _silhouetteFX);
+            if (LoadingScreenHintsModule.Instance.EnableQuotations.Value) {
+                if (_quotes.Any()) {
+                    currentCount += _quotes.Count;
+                    if (randomValue <= currentCount) {
+                        LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
+                        return new QuoteHint(_quotes[randomValue - (currentCount - _quotes.Count) - 1]);
+                    }
+                }
+            }
+
+            if (LoadingScreenHintsModule.Instance.EnableCharacterRiddles.Value) {
+                if (_characters.Any()) {
+                    currentCount += _characters.Count;
+                    if (randomValue <= currentCount) {
+                        var characterHint = _characters[randomValue - (currentCount - _characters.Count) - 1];
+                        characterHint.Texture?.Dispose();
+                        characterHint.Texture = new AsyncTexture2D();
+                        var imageBytes = await HttpUtil.TryAsync(() => $"{_baseUrl}characters/{characterHint.Image}".GetBytesAsync());
+                        if (imageBytes == null) {
+                            return null;
+                        }
+
+                        try {
+                            using var textureStream = new MemoryStream(imageBytes);
+                            var       loadedTexture = Texture2D.FromStream(GameService.Graphics.GraphicsDeviceManager.GraphicsDevice, textureStream);
+                            characterHint.Texture.SwapTexture(loadedTexture);
+                        } catch (Exception ex) {
+                            LoadingScreenHintsModule.Logger.Debug(ex, ex.Message);
+                        }
+
+                        LoadingScreenHintsModule.Instance.SeenHints.Value.Add(randomValue);
+                        return new CharacterRiddleHint(characterHint, _glowFx, _silhouetteFX);
+                    }
                 }
             }
 

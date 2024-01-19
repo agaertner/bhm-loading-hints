@@ -61,6 +61,15 @@ namespace Nekres.Loading_Screen_Hints.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Character Riddles.
+        /// </summary>
+        internal static string Character_Riddles {
+            get {
+                return ResourceManager.GetString("Character Riddles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click to {0}.
         /// </summary>
         internal static string Click_to__0_ {
@@ -75,6 +84,24 @@ namespace Nekres.Loading_Screen_Hints.Properties {
         internal static string Did_You_Know_ {
             get {
                 return ResourceManager.GetString("Did You Know:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable.
+        /// </summary>
+        internal static string Disable {
+            get {
+                return ResourceManager.GetString("Disable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable.
+        /// </summary>
+        internal static string Enable {
+            get {
+                return ResourceManager.GetString("Enable", resourceCulture);
             }
         }
         
@@ -97,6 +124,24 @@ namespace Nekres.Loading_Screen_Hints.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide on Movement.
+        /// </summary>
+        internal static string Hide_on_Movement {
+            get {
+                return ResourceManager.GetString("Hide on Movement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hints.
+        /// </summary>
+        internal static string Hints {
+            get {
+                return ResourceManager.GetString("Hints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It&apos;s {0}!.
         /// </summary>
         internal static string It_s__0__ {
@@ -111,6 +156,33 @@ namespace Nekres.Loading_Screen_Hints.Properties {
         internal static string Language_Override {
             get {
                 return ResourceManager.GetString("Language Override", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lessons.
+        /// </summary>
+        internal static string Lessons {
+            get {
+                return ResourceManager.GetString("Lessons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quotations.
+        /// </summary>
+        internal static string Quotations {
+            get {
+                return ResourceManager.GetString("Quotations", resourceCulture);
             }
         }
         
