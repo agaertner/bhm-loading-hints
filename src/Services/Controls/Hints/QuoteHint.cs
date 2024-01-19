@@ -8,7 +8,7 @@ using Nekres.Loading_Screen_Hints.Services.Models;
 namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
     public class QuoteHint : BaseHint {
 
-        private Quote _quote;
+        private Quotation quotation;
 
         private BitmapFont _font;
         private BitmapFont _sourceFont;
@@ -16,12 +16,12 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         private const string QUOTATION  = "“{0}”";
         private const string SOURCE_BIND = "— ";
 
-        public QuoteHint(Quote quote) {
-            _font       = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
-            _sourceFont = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size16, ContentService.FontStyle.Italic);
-            _quote      = quote;
+        public QuoteHint(Quotation quotation) {
+            _font          = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size18, ContentService.FontStyle.Regular);
+            _sourceFont    = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size16, ContentService.FontStyle.Italic);
+            this.quotation = quotation;
 
-            FadeOutDuration = quote.Text.Length / 50f;
+            FadeOutDuration = quotation.Text.Length / 50f;
         }
 
         protected override void Paint(SpriteBatch spriteBatch, Rectangle bounds) {
@@ -30,11 +30,11 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
             var center = new Point(bounds.Width / 2, bounds.Height / 2);
             int centerRight = center.X + center.X / 2;
 
-            string citation      = DrawUtil.WrapText(_font, string.Format(QUOTATION, _quote.Text ?? string.Empty), bounds.Width - BaseHint.RIGHT_PADDING);
+            string citation      = DrawUtil.WrapText(_font, string.Format(QUOTATION, quotation.Text ?? string.Empty), bounds.Width - BaseHint.RIGHT_PADDING);
             int    srcBindWidth  = (int)_sourceFont.MeasureString(SOURCE_BIND).Width;
             int    srcBindHeight = (int)_sourceFont.MeasureString(SOURCE_BIND).Height;
 
-            string source    = DrawUtil.WrapText(_sourceFont, _quote.Source ?? string.Empty, centerRight / 2f);
+            string source    = DrawUtil.WrapText(_sourceFont, quotation.Source ?? string.Empty, centerRight / 2f);
             int    srcHeight = (int)_sourceFont.MeasureString(source).Height;
             int    srcWidth  = (int)_sourceFont.MeasureString(source).Width;
             //var srcCenter = new Point(center.X - srcWidth / 2, center.Y - srcHeight / 2);

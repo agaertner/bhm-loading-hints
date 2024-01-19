@@ -141,4 +141,28 @@
   <data name="Forces a different language for displaying hints." xml:space="preserve">
     <value>Erzwingt eine andere Sprache für die Anzeige von Hinweisen.</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Aktiviere</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Deaktiviere</value>
+  </data>
+  <data name="Character Riddles" xml:space="preserve">
+    <value>Charakter Rätsel</value>
+  </data>
+  <data name="Lessons" xml:space="preserve">
+    <value>Lehren</value>
+  </data>
+  <data name="Hints" xml:space="preserve">
+    <value>Hinweise</value>
+  </data>
+  <data name="Quotations" xml:space="preserve">
+    <value>Zitate</value>
+  </data>
+  <data name="Hide on Movement" xml:space="preserve">
+    <value>Ausblenden bei Bewegung</value>
+  </data>
 </root>

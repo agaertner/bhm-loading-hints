@@ -62,7 +62,7 @@
     <Compile Include="Services\Controls\Hints\ModuleKnowledgeHint.cs" />
     <Compile Include="Services\Models\ModuleKnowledge.cs" />
     <Compile Include="Services\Models\CharacterRiddle.cs" />
-    <Compile Include="Services\Models\Quote.cs" />
+    <Compile Include="Services\Models\Quotation.cs" />
     <Compile Include="Services\Controls\Hints\BaseHint.cs" />
     <Compile Include="Services\Controls\Hints\QuoteHint.cs" />
     <Compile Include="LoadingScreenHintsModule.cs" />

@@ -32,6 +32,10 @@ namespace Nekres.Loading_Screen_Hints.Services.Controls.Hints {
         private bool        _fadeDirection;
 
         public void FadeOut() {
+            if (_fadeOut is {Completion: > 0}) {
+                return; // Already fading.
+            }
+
             this.BasicTooltipText = string.Empty;
 
             // Already invisible.
