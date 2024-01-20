@@ -28,8 +28,8 @@
         "quote": "Et c'est ainsi que le Maréchal des Lanciers Kormir, héros de tout Elona, fut attiré dans le noir d'encre qui enveloppait le Dieu des Secrets."
     },
     {
-        "source": "Vigil Recruit",
-        "quote": "Wow. That's quality armor."
+        "source": "Recrue des Veilleurs",
+        "quote": "Wahou. Ça, c'est de l'armure de qualité."
     },
     {
         "source": "Banquier Sylvari",
@@ -40,32 +40,32 @@
         "quote": "Les choyas n'ont que peu d'amis. Il faut dire que les aiguilles, ça refroidit."
     },
     {
-        "source": "A Flight from Flame",
-        "quote": "Fighting begets fights, violence begets violence."
+        "source": "Fuir les flammes",
+        "quote": "Le combat appelle le combat, la violence appelle la violence."
     },
     {
-        "source": "A Kralkatorrid Affair",
-        "quote": "The dragon may have crystallized my body, but you, Hubert...you crystallized my heart."
+        "source": "Une liaison Kralkatorride",
+        "quote": "Le dragon a peut-être cristallisé mon corps, mais toi, Hubert... C'est mon cœur que tu as cristallisé."
     },
     {
         "source": "A Posy of Forget-Me-Nots",
         "quote": "I am midnight, and all night creatures know me."
     },
     {
-        "source": "Bandit Journal",
-        "quote": "That damned Gorseval thing keeps killing everything that goes near it."
+        "source": "Journal de bandit",
+        "quote": "Ce fichu Gorseval tue tout ce qui l'approche."
     },
     {
         "source": "Battered Book, Invictus Castrum",
         "quote": "Dredge are so ugly. It took us weeks to notice some were female."
     },
     {
-        "source": "Biography of Gwen Thackeray",
-        "quote": "Shaped by a life of loss and victory, driven by ferocity and cunning, Gwen Thackeray is indisputably one of Ascalon's most influential post-Searing figures."
+        "source": "Biographie de Gwen Thackeray",
+        "quote": "Marquée par une vie de pertes et de victoires, poussée par férocité et sa ruse, Gwen Thackeray est indiscutablement l'un des personnages les plus influents d'Ascalon après la Fournaise."
     },
     {
-        "source": "Biography of Ogden Stonehealer",
-        "quote": "The Great Dwarf and the Great Destroyer met head-on, and the fate of all dwarves was forged in the fires of war."
+        "source": "Biographie d'Ogden Guéripierre",
+        "quote": "Le Grand Nain et le Grand destructeur s'affrontèrent et le destin de tous les nains fut forgé dans les flammes de la guerre."
     },
     {
         "source": "Bjornjan le Grand",
@@ -104,8 +104,8 @@
         "quote": "Taller opponents fall harder. Strike low to knock them off balance, then finish them off with a kick to the knee or a head butt."
     },
     {
-        "source": "Everyday Healing: Gift of the Monk",
-        "quote": "Remember, the road is long, but it need not be taken alone."
+        "source": "Se soigner au quotidien : don du moine",
+        "quote": "N'oubliez pas, la route est longue, mais il n'est pas nécessaire de la suivre seul."
     },
     {
         "source": "History of Tyria",
@@ -124,16 +124,16 @@
         "quote": "To know when to sacrifice one for the many is never easy."
     },
     {
-        "source": "Bandit Journal",
-        "quote": "We should either put them to work or watch them get eaten by Gorseval. I could use some entertainment."
+        "source": "Journal de bandit",
+        "quote": "On devrait les faire travailler ou les regarder se faire dévorer par Gorseval. Je ne dirais pas non à un spectacle de bon goût."
     },
     {
         "source": "Journal of Kormir",
         "quote": "The destruction of Tyria is inevitable, yet there is a part of me that still remembers what it was like to be mortal—what it is to hope."
     },
     {
-        "source": "Koss on Koss, Volume Two",
-        "quote": "What if there's no longer a place for an old warrior like me?"
+        "source": "Koss parle de Koss, volume deux",
+        "quote": "Et si un vieux guerrier tel que moi n'y avait plus sa place ?"
     },
     {
         "source": "Master Togo's Book of Koans 1",
@@ -148,8 +148,8 @@
         "quote": "La nature nous met face à de nouveaux défis, et si nous devons nous adapter pour survivre à ces épreuves, nous le ferons."
     },
     {
-        "source": "Personal Log, Rata Primus",
-        "quote": "How can I run a proper lab if he's going to bawl his eyes out every time we liquidate a few dozen specimens?"
+        "source": "Journal personnel, Rata Primus",
+        "quote": "Comment pourrais-je faire tourner ce labo correctement, alors que les yeux lui sortent de la tête chaque fois que nous liquidons quelques douzaines de spécimens ?"
     },
     {
         "source": "Propriété privée de P.I. Joko",
@@ -160,16 +160,16 @@
         "quote": "The outside world is a violent place, where the seeds of chaos are sown with innocent tears."
     },
     {
-        "source": "Quotes from Ventari the Centaur",
-        "quote": "All things have a right to grow. The blossom is brother to the weed."
+        "source": "Citations de Ventari, Le Centaure",
+        "quote": "Toute chose a le droit de grandir. La fleur est la sœur du chiendent."
     },
     {
-        "source": "Quotes from Ventari the Centaur",
-        "quote": "Never leave a wrong to ripen into evil or sorrow. Act with wisdom, but act. From the smallest blade of grass to the largest mountain, where life goes—so, too, should you."
+        "source": "Citations de Ventari, Le Centaure",
+        "quote": "Ne laissez jamais l'injustice donner naissance au mal ou au chagrin. Agissez avec sagesse, mais agissez. Du plus petit brin d'herbe à la plus grande montagne, partout où la vie grandit vous devez grandir aussi."
     },
     {
-        "source": "Quotes from Ventari the Centaur",
-        "quote": "Live life well and fully, and waste nothing. Do not fear difficulty. Hard ground makes stronger roots."
+        "source": "Citations de Ventari, Le Centaure",
+        "quote": "Vivez bien et pleinement, n'ayez aucun regret. Ne craignez pas les obstacles. Les sols les plus durs font les racines les plus solides."
     },
     {
         "source": "Recette du Rance",
@@ -198,5 +198,9 @@
     {
         "source": "La carte du grand tout",
         "quote": "Si l'équilibre des énergies venait à être perturbé, le monde serait bouleversé et tous les êtres vivants tomberaient dans le vide."
+    },
+    {
+        "source": "Slupsloop",
+        "quote": "Quelque chose remue, dans l'eau. A l'aide !"
     }
 ]
